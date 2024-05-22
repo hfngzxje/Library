@@ -3,6 +3,7 @@ package com.example.Library.Service;
 import com.example.Library.Entities.Books;
 import com.example.Library.Entities.Borrowings;
 import com.example.Library.Entities.Customer;
+import com.example.Library.Mapper.BorrowMapper;
 import com.example.Library.Service.ServiceIService.IBorrowingService;
 import com.example.Library.dtos.Request.BorrowBookRequest;
 import com.example.Library.dtos.Request.ReturnBookRequest;
@@ -16,9 +17,14 @@ import com.example.Library.repository.CustomerRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +33,7 @@ public class BorrowingService implements IBorrowingService {
     BorrowingRepository borrowingRepository;
     BookRepository bookRepository;
     CustomerRepository customerRepository;
+    BorrowMapper borrowMapper;
     @Override
     public BorrowBookResponse borrowBook(BorrowBookRequest borrowBookRequest) {
         Books book = bookRepository.findById(borrowBookRequest.getBookId())
@@ -76,6 +83,16 @@ public class BorrowingService implements IBorrowingService {
                 book.getTitle(),
                 customer.getCustomerName()
         );
+    }
+
+    @Override
+    public List<BorrowBookResponse> getAllBorrow(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Borrowings> bookPage = borrowingRepository.findAll(pageable);
+
+        return bookPage.getContent().stream()
+                .map(borrowMapper::toBorrowResponse)
+                .collect(Collectors.toList());
     }
 
 }

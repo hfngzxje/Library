@@ -3,15 +3,14 @@ package com.example.Library.Controller;
 import com.example.Library.Service.ServiceIService.IBorrowingService;
 import com.example.Library.dtos.Request.BorrowBookRequest;
 import com.example.Library.dtos.Request.ReturnBookRequest;
-import com.example.Library.dtos.response.ApiResponse;
-import com.example.Library.dtos.response.BorrowBookResponse;
-import com.example.Library.dtos.response.CustomerResponse;
-import com.example.Library.dtos.response.ReturnBookResponse;
+import com.example.Library.dtos.response.*;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -37,6 +36,15 @@ public class BorrowingController {
         return ApiResponse.<ReturnBookResponse>builder()
                 .massage("Return successfully!!")
                 .result(response)
+                .build();
+    }
+
+    @GetMapping()
+    ApiResponse<List<BorrowBookResponse>> getAllBorrow(@RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "5") int pageSize) {
+        List<BorrowBookResponse> list = borrowingService.getAllBorrow(page,pageSize);
+        return ApiResponse.<List<BorrowBookResponse>>builder()
+                .result(list)
                 .build();
     }
 }
