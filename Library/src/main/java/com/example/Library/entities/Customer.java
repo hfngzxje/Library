@@ -1,11 +1,9 @@
-package com.example.Library.Entities;
+package com.example.Library.entities;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Date;
 
 @Entity
 @Data

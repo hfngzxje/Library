@@ -1,4 +1,4 @@
-package com.example.Library.Service.ServiceIService;
+package com.example.Library.service.serviceIService;
 
 import com.example.Library.dtos.Request.BookRequest;
 import com.example.Library.dtos.response.BookResponse;
@@ -11,6 +11,8 @@ public interface IBookService {
     void deleteBook(Long bookId);
     BookResponse getBookById(Long bookId);
     List<BookResponse> getAllBooks(int page, int pageSize);
+
+    List<BookResponse> searchByTitle(int page, int pageSize, String title);
 
 
 }

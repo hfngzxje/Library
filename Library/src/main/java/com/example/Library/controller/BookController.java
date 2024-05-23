@@ -1,6 +1,6 @@
-package com.example.Library.Controller;
+package com.example.Library.controller;
 
-import com.example.Library.Service.BookService;
+import com.example.Library.service.BookService;
 import com.example.Library.dtos.Request.BookRequest;
 import com.example.Library.dtos.response.ApiResponse;
 import com.example.Library.dtos.response.BookResponse;
@@ -10,7 +10,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/book")
@@ -58,6 +57,17 @@ public class BookController {
         return ApiResponse.<BookResponse>builder()
                 .massage("Update successfully!!")
                 .result(bookService.updateBook(bookId,bookRequest))
+                .build();
+    }
+
+    @GetMapping("searchByTitle")
+    ApiResponse<List<BookResponse>> searchByTitle(@RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "5") int pageSize,
+                                                  @RequestParam(required = false) String title) {
+        List<BookResponse> list = bookService.searchByTitle(page,pageSize,title);
+        return ApiResponse.<List<BookResponse>>builder()
+                .result(list)
+                .massage("Search successfully!!")
                 .build();
     }
 

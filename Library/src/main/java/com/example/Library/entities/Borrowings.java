@@ -1,4 +1,4 @@
-package com.example.Library.Entities;
+package com.example.Library.entities;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

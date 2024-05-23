@@ -1,14 +1,14 @@
-package com.example.Library.Mapper;
+package com.example.Library.mapper;
 
-import com.example.Library.Entities.Customer;
 import com.example.Library.dtos.Request.CustomerRequest;
 import com.example.Library.dtos.response.CustomerResponse;
+import com.example.Library.entities.Customer;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-21T16:17:34+0700",
+    date = "2024-05-23T11:09:27+0700",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.10 (Oracle Corporation)"
 )
 @Component
@@ -43,7 +43,7 @@ public class CustomerMapperImpl implements CustomerMapper {
     }
 
     @Override
-    public void UpdateCustomer(Customer customer, CustomerRequest request) {
+    public void updateCustomer(Customer customer, CustomerRequest request) {
         if ( request == null ) {
             return;
         }

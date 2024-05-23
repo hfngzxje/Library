@@ -1,9 +1,9 @@
-package com.example.Library.Controller;
+package com.example.Library.controller;
 
-import com.example.Library.Service.CustomerService;
+import com.example.Library.dtos.response.BookResponse;
+import com.example.Library.service.CustomerService;
 import com.example.Library.dtos.Request.CustomerRequest;
 import com.example.Library.dtos.response.ApiResponse;
-import com.example.Library.dtos.response.BookResponse;
 import com.example.Library.dtos.response.CustomerResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -57,6 +57,17 @@ public class CustomerController {
         return ApiResponse.<CustomerResponse>builder()
                 .massage("Update successfully!!")
                 .result(customerService.updateCustomer(customerId,customerRequest))
+                .build();
+    }
+
+    @GetMapping("searchByName")
+    ApiResponse<List<CustomerResponse>> searchByName(@RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "5") int pageSize,
+                                                  @RequestParam(required = false) String name) {
+        List<CustomerResponse> list = customerService.searchByName(page,pageSize,name);
+        return ApiResponse.<List<CustomerResponse>>builder()
+                .result(list)
+                .massage("Search successfully!!")
                 .build();
     }
 }

@@ -1,13 +1,12 @@
-package com.example.Library.Controller;
+package com.example.Library.controller;
 
-import com.example.Library.Service.ServiceIService.IBorrowingService;
+import com.example.Library.service.serviceIService.IBorrowingService;
 import com.example.Library.dtos.Request.BorrowBookRequest;
 import com.example.Library.dtos.Request.ReturnBookRequest;
 import com.example.Library.dtos.response.*;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,6 +44,17 @@ public class BorrowingController {
         List<BorrowBookResponse> list = borrowingService.getAllBorrow(page,pageSize);
         return ApiResponse.<List<BorrowBookResponse>>builder()
                 .result(list)
+                .build();
+    }
+
+    @GetMapping("searchByNameAndTitle")
+    ApiResponse<List<BorrowBookResponse>> searchByNameAndTitle(@RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "5") int pageSize,
+                                                     @RequestParam(required = false) String input) {
+        List<BorrowBookResponse> list = borrowingService.searchByBookNameAndCustomerName(page,pageSize,input);
+        return ApiResponse.<List<BorrowBookResponse>>builder()
+                .result(list)
+                .massage("Search successfully!!")
                 .build();
     }
 }

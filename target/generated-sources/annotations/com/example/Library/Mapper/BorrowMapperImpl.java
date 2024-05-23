@@ -1,15 +1,15 @@
-package com.example.Library.Mapper;
+package com.example.Library.mapper;
 
-import com.example.Library.Entities.Books;
-import com.example.Library.Entities.Borrowings;
-import com.example.Library.Entities.Customer;
 import com.example.Library.dtos.response.BorrowBookResponse;
+import com.example.Library.entities.Books;
+import com.example.Library.entities.Borrowings;
+import com.example.Library.entities.Customer;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-22T14:13:46+0700",
+    date = "2024-05-23T11:09:27+0700",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.10 (Oracle Corporation)"
 )
 @Component

@@ -1,8 +1,9 @@
-package com.example.Library.Service;
+package com.example.Library.service;
 
-import com.example.Library.Entities.Books;
-import com.example.Library.Mapper.BookMapper;
-import com.example.Library.Service.ServiceIService.IBookService;
+import com.example.Library.entities.Books;
+import com.example.Library.mapper.BookMapper;
+import com.example.Library.repository.specifications.BookSpec;
+import com.example.Library.service.serviceIService.IBookService;
 import com.example.Library.dtos.Request.BookRequest;
 import com.example.Library.dtos.response.BookResponse;
 import com.example.Library.enums.ErrorCode;
@@ -14,8 +15,10 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +50,7 @@ public class BookService implements IBookService {
         }else if(bookRequest.getQuantity()<0){
             throw new AppException(ErrorCode.INVALID_QUANTITY);
         }
-       bookMapper.UpdateBook(books,bookRequest);
+       bookMapper.updateBook(books,bookRequest);
        return bookMapper.toBookResponse(bookRepository.save(books));
     }
 
@@ -72,6 +75,16 @@ public class BookService implements IBookService {
         Page<Books> bookPage = bookRepository.findAll(pageable);
 
         return bookPage.getContent().stream()
+                .map(bookMapper::toBookResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookResponse> searchByTitle(int page, int pageSize, String title) {
+        Specification<Books> spec = BookSpec.searchByTitle(title);
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Books> booksPage = bookRepository.findAll(spec,pageable);
+        return booksPage.getContent().stream()
                 .map(bookMapper::toBookResponse)
                 .collect(Collectors.toList());
     }

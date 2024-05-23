@@ -1,8 +1,6 @@
-package com.example.Library.Service.ServiceIService;
+package com.example.Library.service.serviceIService;
 
-import com.example.Library.dtos.Request.BookRequest;
 import com.example.Library.dtos.Request.CustomerRequest;
-import com.example.Library.dtos.response.BookResponse;
 import com.example.Library.dtos.response.CustomerResponse;
 
 import java.util.List;
@@ -13,4 +11,5 @@ public interface ICustomerService {
     void deleteCustomer(Long customerId);
     CustomerResponse getCustomerById(Long customerId);
     List<CustomerResponse> getAllCustomer(int page, int pageSize);
+    List<CustomerResponse> searchByName(int page, int pageSize, String name);
 }
