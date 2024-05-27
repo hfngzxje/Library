@@ -72,13 +72,4 @@ public class BookController {
     }
 
 
-    @GetMapping("getAll")
-    ApiResponse<List<BookResponse>> getAllBooks(@RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "5") int pageSize) {
-        List<BookResponse> list = bookService.getAllBookss(page,pageSize);
-        return ApiResponse.<List<BookResponse>>builder()
-                .result(list)
-                .build();
-    }
-
 }

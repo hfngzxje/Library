@@ -1,6 +1,5 @@
 package com.example.Library.service;
 
-import com.example.Library.client.BookServiceClient;
 import com.example.Library.entities.Books;
 import com.example.Library.mapper.BookMapper;
 import com.example.Library.repository.specifications.BookSpec;
@@ -19,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,20 +86,6 @@ public class BookService implements IBookService {
         return booksPage.getContent().stream()
                 .map(bookMapper::toBookResponse)
                 .collect(Collectors.toList());
-    }
-
-    private final BookServiceClient bookServiceClient;
-
-    public BookResponse getBookByIdd(Long bookId) {
-        return bookServiceClient.findByBookId(bookId).getResult();
-    }
-
-    public List<BookResponse> getAllBookss(int page, int pageSize) {
-        return bookServiceClient.getAllBooks(page, pageSize).getResult();
-    }
-
-    public List<BookResponse> searchByTitlee(int page, int pageSize, String title) {
-        return bookServiceClient.searchByTitle(page, pageSize, title).getResult();
     }
 
 }
