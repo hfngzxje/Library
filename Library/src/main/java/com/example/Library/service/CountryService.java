@@ -1,18 +1,19 @@
 package com.example.Library.service;
 
-import com.example.Library.client.CountriesClient;
-import lombok.RequiredArgsConstructor;
+import com.example.Library.entities.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
+import org.springframework.web.client.RestTemplate;
 
 @Service
-@RequiredArgsConstructor
 public class CountryService {
 
-    private final CountriesClient countriesClient;
+    @Autowired
+    private RestTemplate restTemplate;
 
-    public Map<String, Object> getCountries() {
-        return countriesClient.getCountries();
+    public ApiResponses getAllCountries() {
+        String url = "https://api.first.org/data/v1/countries";
+        return restTemplate.getForObject(url, ApiResponses.class);
     }
 }
